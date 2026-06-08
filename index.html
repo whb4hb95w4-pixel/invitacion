@@ -191,7 +191,8 @@
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({ 
-                    Alerta: '👀 ¡Atención! Alguien acaba de abrir el enlace ahora mismo.'
+                    Alerta: '👀 ¡Atención! Alguien acaba de abrir el enlace ahora mismo.',
+                    Dispositivo: obtenerDispositivo() 
                 })
             }).catch(error => console.log("Error silencioso", error));
 
@@ -247,7 +248,15 @@
             step1.classList.add('hidden');
             step2.classList.remove('hidden');
         });
-
+        
+function obtenerDispositivo() {
+            const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+            if (/android/i.test(userAgent)) return "📱 Android";
+            if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) return "🍏 iPhone/iPad";
+            if (/Mac/i.test(userAgent)) return "💻 Mac";
+            if (/Win/i.test(userAgent)) return "🖥️ Windows";
+            return "❓ Otro dispositivo";
+        }
 function finish(day) {
 
             step2.classList.add('hidden');
@@ -263,6 +272,7 @@ function finish(day) {
                 },
                 body: JSON.stringify({ 
                     Asunto: '¡HA DICHO QUE SIII !',
+                    Dispositivo: obtenerDispositivo(),
                     Dia_Elegido: day
                 })
             }).then(response => {
