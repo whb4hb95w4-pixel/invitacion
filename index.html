@@ -236,10 +236,28 @@
             step2.classList.remove('hidden');
         });
 
-        function finish(day) {
+function finish(day) {
+            // 1. Ocultar la pantalla 2 y mostrar la pantalla 3 inmediatamente
             step2.classList.add('hidden');
             step3.classList.remove('hidden');
             chosenDaySpan.textContent = day;
+
+
+            fetch('https://formspree.io/f/xykajgna', {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ 
+                    Asunto: '¡LA CHICA HA DICHO QUE SÍ! 🎉',
+                    Dia_Elegido: day
+                })
+            }).then(response => {
+                console.log("Correo enviado con éxito");
+            }).catch(error => {
+                console.log("Error al enviar el correo", error);
+            });
         }
     </script>
 </body>
